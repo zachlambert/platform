@@ -1,0 +1,130 @@
+GAME FRAMEWORK DESCRIPTION + TODO
+
+DESCRIPTION---------
+
+Uses SFML library for graphics, sound, event handling.
+
+SCENES--------
+
+The main.cpp file handles the creation of the window and the game loop.
+The main.cpp file contains a scene object, which handles the game logic, drawing,
+event handling for the specific scene that is currently active.
+This can be a gui scene such as the main menu, or a game scene.
+
+From within the scene, the scene can be changed by creating a new scene object and storing
+a pointer to it. The main.cpp checks if there is a new scene, then changes to the new scene.
+
+The gui uses the tgui library, which works well enough. However, it may be better to handle gui myself
+in the future. 
+
+When changing the scene from buttons in tgui, you have to pass a function, so to change the scene, you
+have to create a change scene functor and pass this.
+
+RESOURCES-------
+
+The resources are listed in the resources.txt file (except music).
+The resources.cpp file reads this file and stores all the data.
+There are member functions in resources to get resources based off their name.
+The resources are:
+Images, fonts, animations, tilemaps, sounds.
+
+Images are stored in spritesheet objects. The spritesheet object stores the name, texture and a spriteSheetBoundsObject
+which stores information on the contents of the spriteSheet and has a function for getting the textureRect for the image
+at a specific index within the spritesheet.
+The spriteSheetBounds object can be stored separately from the spritesheet object.
+The spriteSheetBounds object can be regular, where its a grid, each part is the same size, and knows the numbers of rows
+and columns.
+It can also be irregular, where the parts are not in a nice pattern. In this case, a spriteSheetConfig text file is
+provided, which lists the textureRects of each image within the spritesheet (x,y,width,height).
+
+Fonts and sounds are stored as a name, with the sfml object, where the name is used to retrieve the sfml object.
+
+Animations are just a vector of integers (frames) with the name and (normal) duration of the animation.
+
+Tilemaps are read from a txt file (at the moment) which is a grid of integers.
+It also knows which tile indexes are solid tiles.
+
+ENTITIES------------
+
+All entities derive from an SFML class, except for VertexArraySprite.
+They all derive from sf::Transformable and sf::Drawable.
+The functionality of the entities is inherited.
+
+The Updatable class is inherited for a update(float seconds) function.
+
+The Movable class is inherited for movement, where it has a updateMovable(float seconds) function
+and getDisplacement() function. It has velocity and acceleration, and also handles gravity.
+
+The Collidable class holds the Hitbox for collisions. (More on this later)
+
+If you make an entity class with functionality, it derives from a class that derives from sf::Transformable
+and sf::Drawable. This is either a SFML entity class (sf::Sprite, sf::Shape, sf::Font) or a custom class like VertexArraySprite.
+Then you also inherit from Updatable and Movable, Collidable, etc. Multiple inheritance is not a problem here.
+
+Other sprites are CompoundSprite, AnimatedSprite, AnimatedCompoundSprite, Tilemap.
+CompoundSprite has multiple, separate part, although they must all be from the same texture.
+AnimatedSprite animates.
+AnimatedCompoundSprite animates a compoundSprite.
+
+For the animated sprites, both use the Animator class to process the animation. Where it returns true on the update() function
+if the frame has changed, where the class with the Animator class, will update the frame.
+
+The tilemap entity, takes a TileMapData object from resources, then constructs the VertexArray. It can also be tested for with collision.
+
+COLLISIONS-----------
+
+The two types of collisions are entity and entity, and entity and tilemap
+
+Each entity that inherits from Collidable, has a Hitbox.
+Each hitbox has a roughBounds, which is a bounding rect which is checked first, before a more detailed check. This improves efficiency.
+
+The types of Hitbox are:
+NONE: no collision
+CIRCLE: circle, scales by the maxAbsScale (eg: scale = (-2,1), scales by (2,2)), doesn't rotate.
+RECT: Axis aligned rotation, scales, doesn't rotate. Doesn't have to centre on entity origin.
+POLYGON: A vector of sf::Vector2s (points). The bounding rect is calculated at the start. It can be rotated and scaled.
+	When the bouding box is rotated, it produces the bounding box of the rotated box, not a rotated box, since the sf::FloatRect object only stores axis-aligned rects.
+POLYGON_RECT: Like a polygon, except it checks for collions with the axis-aligned bounding box of the polygon. This is the most complex since it has to recompute the bounding box
+	everytime the entity changes rotation or scale.
+	
+Collisions are handled between each type of hitbox.
+
+The collisions of entity with tilemap only work if the tilemap is axis-aligned and has a scale of (1,1), despite it being able to be scaled and rotated.
+I could get it to work with scaling, but it doesn't make sense to scale a tilemap, since you can just change the tile sizes.
+This also works with every type of hitbox.
+
+
+SOUND AND MUSIC------------
+
+When playing sound or music, the sf::Music or sf::Sound file can't be a local file, since it needs to exist for the duration of the sound.
+Sound files are loaded from SoundBuffer objects, which are loaded to the resources object.
+Music files aren't loaded, but are streamed from files, so there is nothing in resources for music. You just open the music file when you
+want to play it.
+
+TODO---------------
+
+Create helper functions for the scenes, which are bits of code that are common throughout scenes.
+For example, the code for moving a entity while checking for collisions, and stopping it if it collides.
+
+Create a scene manager class, which stores the scenes. Allows for scenes to be preserved to return to.
+
+Make my own gui class/es:
+-Button
+-Slider
+-Dropdown menu
+-Textbox (maybe)
+
+Create a settings menu
+-Sound			Sliders
+-Key bindings	Buttons
+-Resolution		Buttons(cycle through) or dropdown
+-Windowed mode	Button
+-Brightness		Slider
+
+Create a pause menu which has:
+-Settings
+-Resume
+-Quit to main menu
+
+
+

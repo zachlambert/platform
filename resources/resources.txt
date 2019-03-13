@@ -1,0 +1,23 @@
+#images
+spritesheet_example.png 6 5
+spritesheet_example2.png 6 4
+spritesheet_example3.png 8 1
+levels_tileset.png 5 2
+rough_spritesheet.png 6 5
+irregular_spritesheet.png irregular_spritesheet_config.txt
+
+#fonts
+arial.ttf
+
+#animations
+walk 1.2 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29
+walk2 1.2 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+walk3 0.6 0 1 2 3 4 5 6 7
+walk_rough 0.8 0 1 2 3 4 5 6 7 8 9
+
+#tilemaps
+example_tilemap example_tilemap.txt levels_tileset.png 64 64 64 0 1 2 3 4
+
+#sounds
+punch1.wav
+punch2.wav

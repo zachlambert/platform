@@ -1,0 +1,4 @@
+
+Todo:
+1. Make all the entities use the same entity class as ExampleEntity (and rename ExampleEntity)
+2. Clean up the code and add documentation to everything
