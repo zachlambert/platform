@@ -4,7 +4,7 @@
 
 ParticleSystem::ParticleSystem(int number):VertexArraySprite(sf::Quads,number*4),particles(number),source(0,0){
 	for(std::size_t i=0;i<vertices.getVertexCount();i++){
-		vertices[i].color = sf::Color::Blue;
+		vertices[i].color = sf::Color::Black;
 	}
 }
 
@@ -19,6 +19,7 @@ void ParticleSystem::update(float seconds){
 		vertices[i*4+1].position += p.velocity * seconds;
 		vertices[i*4+2].position += p.velocity * seconds;
 		vertices[i*4+3].position += p.velocity * seconds;
+		p.velocity -= p.velocity*0.8f*seconds;
 	}
 }
 

@@ -10,10 +10,9 @@
 #define SIMPLE_SCENE_H_GUARD
 
 #include "scene.h"
-#include "exampleEntity.h"
+#include "entity.h"
 #include "tilemap.h"
 #include "music.h"
-#include "particleSystem.h"
 
 class SimpleScene: public Scene{
 public:
@@ -24,13 +23,13 @@ public:
 	virtual void draw(sf::RenderTarget& target,sf::RenderStates states)const;
 	
 private:
-	ExampleEntity entity;
-	ExampleEntity entity2;
+	SpriteEntity entity;
+	SpriteEntity entity2;
 	sf::Text textEntity;
 	sf::Sound testSound;
 	sf::Music music;
-	TileMap tileMap;
-	ParticleSystem particles;
+	TileMapEntity tileMap;
+	ParticleSystemEntity particles;
 };
 
 #endif

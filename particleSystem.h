@@ -21,7 +21,7 @@ class ParticleSystem: public VertexArraySprite{
 public:
 	ParticleSystem(int);
 	
-	virtual void update(float);
+	void update(float);
 	
 	void setSource(float x,float y){ source=sf::Vector2f(x,y); }
 	void setSource(const sf::Vector2f& source){ this->source=source; }
