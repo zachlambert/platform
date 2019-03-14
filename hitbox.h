@@ -4,7 +4,7 @@
 #include <vector>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
-#include "tilemap.h"
+#include "tileMapSprite.h"
 
 struct HitboxType{
 	enum{
@@ -74,6 +74,6 @@ private:
 
 void drawHitbox(sf::RenderTarget&,const sf::Transformable&,const Hitbox&);
 const bool collide(const sf::Transformable&,Hitbox&,const sf::Transformable&,Hitbox&);
-const bool collideTileMap(const TileMap&,const sf::Transformable&,Hitbox&);
+const bool collideTileMap(const TileMapSprite&,const sf::Transformable&,Hitbox&);
 
 #endif

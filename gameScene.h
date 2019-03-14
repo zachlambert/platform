@@ -12,7 +12,8 @@
 #include "scene.h"
 #include "entity.h"
 #include "player.h"
-#include "tilemap.h"
+#include "tileMap.h"
+#include "particleSystem.h"
 #include "music.h"
 
 class GameScene: public Scene{
@@ -25,11 +26,12 @@ public:
 	
 private:
 	Player player;
-	TileMapEntity tileMap;
+	TileMap tileMap;
+	ParticleSystem particleSystem;
 
 	void moveEntities();
-	void moveEntity(Physical& physical);
-	bool collideSolid(Physical& physical);
+	void moveEntity(PhysicalEntity& entity);
+	bool collideSolid(PhysicalEntity& entity);
 
 };
 

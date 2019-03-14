@@ -1,14 +1,14 @@
-#include "particleSystem.h"
+#include "particleSystemSprite.h"
 #include <cstdlib>
 #include <cmath>
 
-ParticleSystem::ParticleSystem(int number):VertexArraySprite(sf::Quads,number*4),particles(number),source(0,0){
+ParticleSystemSprite::ParticleSystemSprite(int number):VertexArraySprite(sf::Quads,number*4),particles(number),source(0,0){
 	for(std::size_t i=0;i<vertices.getVertexCount();i++){
 		vertices[i].color = sf::Color::Blue;
 	}
 }
 
-void ParticleSystem::update(float seconds){
+void ParticleSystemSprite::update(float seconds){
 	for(std::size_t i=0;i<particles.size();i++){
 		Particle& p = particles[i];
 		p.lifetime-=seconds;
@@ -23,7 +23,7 @@ void ParticleSystem::update(float seconds){
 	}
 }
 
-void ParticleSystem::resetParticle(std::size_t index){
+void ParticleSystemSprite::resetParticle(std::size_t index){
 	float angle = (std::rand()%360)*(3.14f/180.f);
 	float speed = (std::rand()%10)+5.f;
 	particles[index].velocity = sf::Vector2f(speed*std::cos(angle),speed*std::sin(angle));

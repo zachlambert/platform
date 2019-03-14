@@ -1,7 +1,7 @@
 #include "hitbox.h"
 #include <algorithm>
 #include <iostream>
-#include "polygonShape.h"
+#include "polygonSprite.h"
 #include <cmath>
 
 void Hitbox::setPolygonRoughBounds(){
@@ -172,7 +172,7 @@ void drawHitbox(sf::RenderTarget& target,const sf::Transformable& transformable,
 			circle.setFillColor(sf::Color::Transparent);
 			target.draw(circle);
 	}else if(hitbox.getType()==HitboxType::POLYGON||hitbox.getType()==HitboxType::POLYGON_RECT){
-			PolygonShape polygon(hitbox.getVertices());
+			PolygonSprite polygon(hitbox.getVertices());
 			polygon.setPosition(transformable.getPosition());
 			polygon.setScale(transformable.getScale());
 			polygon.setRotation(transformable.getRotation());
@@ -409,7 +409,7 @@ const bool collide(const sf::Transformable& a,Hitbox& ah,const sf::Transformable
 	return false;
 }
 
-const bool collideTileMapV(const TileMap& tilemap,const sf::Transform& transform,const sf::FloatRect& rect,const std::vector<sf::Vector2f>& vertices){
+const bool collideTileMapV(const TileMapSprite& tilemap,const sf::Transform& transform,const sf::FloatRect& rect,const std::vector<sf::Vector2f>& vertices){
 	sf::FloatRect roughBounds = transform.transformRect(rect);
 	sf::Vector2f posA = sf::Vector2f(roughBounds.left,roughBounds.top)-tilemap.getPosition();
 	sf::Vector2f posB = posA + sf::Vector2f(roughBounds.width,roughBounds.height);
@@ -435,7 +435,7 @@ const bool collideTileMapV(const TileMap& tilemap,const sf::Transform& transform
 	return false;
 }
 
-const bool collideTileMapC(const TileMap& tilemap,const sf::Transform& transform,const sf::FloatRect& rect,const float radius){
+const bool collideTileMapC(const TileMapSprite& tilemap,const sf::Transform& transform,const sf::FloatRect& rect,const float radius){
 	sf::FloatRect roughBounds = transform.transformRect(rect);
 	sf::Vector2f posA = sf::Vector2f(roughBounds.left,roughBounds.top)-tilemap.getPosition();
 	sf::Vector2f posB = posA + sf::Vector2f(roughBounds.width,roughBounds.height);
@@ -461,7 +461,7 @@ const bool collideTileMapC(const TileMap& tilemap,const sf::Transform& transform
 	return false;
 }
 
-const bool collideTileMapR(const TileMap& tilemap,const sf::Transform& transform,const sf::FloatRect& rect){
+const bool collideTileMapR(const TileMapSprite& tilemap,const sf::Transform& transform,const sf::FloatRect& rect){
 	//Find the position of the top,left and bottom,right corner of the roughBounds in the tilemap.
 	sf::FloatRect roughBounds = transform.transformRect(rect);
 	sf::Vector2f posA = sf::Vector2f(roughBounds.left,roughBounds.top)-tilemap.getPosition();
@@ -481,7 +481,7 @@ const bool collideTileMapR(const TileMap& tilemap,const sf::Transform& transform
 	return false;
 }
 
-const bool collideTileMap(const TileMap& tilemap,const sf::Transformable& transformable,Hitbox& hitbox){
+const bool collideTileMap(const TileMapSprite& tilemap,const sf::Transformable& transformable,Hitbox& hitbox){
 	//Find the position of the top,left and bottom,right corner of the roughBounds in the tilemap.
 	sf::Transform transform = getHitboxTransform(transformable,hitbox);
 	

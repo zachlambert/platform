@@ -64,27 +64,15 @@
     <Filter Include="Source Files\entity_types">
       <UniqueIdentifier>{1fcd8ef3-3b80-4ae4-8c05-fb1d6a8cda24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\entity_sprites">
+      <UniqueIdentifier>{882c2a62-6164-4d63-89b5-b2c6e3868a59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entity_sprites">
+      <UniqueIdentifier>{5b6e4438-e43e-41d8-98cd-6550944070b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animator.cpp">
-      <Filter>Source Files\entity_core</Filter>
-    </ClCompile>
-    <ClCompile Include="particleSystem.cpp">
-      <Filter>Source Files\entity_core</Filter>
-    </ClCompile>
-    <ClCompile Include="polygonShape.cpp">
-      <Filter>Source Files\entity_core</Filter>
-    </ClCompile>
-    <ClCompile Include="spriteUSS.cpp">
-      <Filter>Source Files\entity_core</Filter>
-    </ClCompile>
-    <ClCompile Include="texturedVertexArraySprite.cpp">
-      <Filter>Source Files\entity_core</Filter>
-    </ClCompile>
-    <ClCompile Include="tilemap.cpp">
-      <Filter>Source Files\entity_core</Filter>
-    </ClCompile>
-    <ClCompile Include="vertexArraySprite.cpp">
       <Filter>Source Files\entity_core</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -114,36 +102,36 @@
     <ClCompile Include="motion.cpp">
       <Filter>Source Files\entity_core</Filter>
     </ClCompile>
-    <ClCompile Include="compoundSprite.cpp">
-      <Filter>Source Files\entity_core</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Source Files\entity_types</Filter>
     </ClCompile>
     <ClCompile Include="gameScene.cpp">
       <Filter>Source Files\scene</Filter>
     </ClCompile>
+    <ClCompile Include="vertexArraySprite.cpp">
+      <Filter>Source Files\entity_sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="texturedVertexArraySprite.cpp">
+      <Filter>Source Files\entity_sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="compoundSprite.cpp">
+      <Filter>Source Files\entity_sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="particleSystemSprite.cpp">
+      <Filter>Source Files\entity_sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="polygonSprite.cpp">
+      <Filter>Source Files\entity_sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="spriteSheetSprite.cpp">
+      <Filter>Source Files\entity_sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="tileMapSprite.cpp">
+      <Filter>Source Files\entity_sprites</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animator.h">
-      <Filter>Header Files\entity_core</Filter>
-    </ClInclude>
-    <ClInclude Include="particleSystem.h">
-      <Filter>Header Files\entity_core</Filter>
-    </ClInclude>
-    <ClInclude Include="polygonShape.h">
-      <Filter>Header Files\entity_core</Filter>
-    </ClInclude>
-    <ClInclude Include="spriteUSS.h">
-      <Filter>Header Files\entity_core</Filter>
-    </ClInclude>
-    <ClInclude Include="texturedVertexArraySprite.h">
-      <Filter>Header Files\entity_core</Filter>
-    </ClInclude>
-    <ClInclude Include="tilemap.h">
-      <Filter>Header Files\entity_core</Filter>
-    </ClInclude>
-    <ClInclude Include="vertexArraySprite.h">
       <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="handle.h">
@@ -176,14 +164,38 @@
     <ClInclude Include="motion.h">
       <Filter>Header Files\entity_core</Filter>
     </ClInclude>
-    <ClInclude Include="compoundSprite.h">
-      <Filter>Header Files\entity_core</Filter>
-    </ClInclude>
     <ClInclude Include="player.h">
       <Filter>Header Files\entity_types</Filter>
     </ClInclude>
     <ClInclude Include="gameScene.h">
       <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexArraySprite.h">
+      <Filter>Header Files\entity_sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="texturedVertexArraySprite.h">
+      <Filter>Header Files\entity_sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="compoundSprite.h">
+      <Filter>Header Files\entity_sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="particleSystemSprite.h">
+      <Filter>Header Files\entity_sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="polygonSprite.h">
+      <Filter>Header Files\entity_sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="spriteSheetSprite.h">
+      <Filter>Header Files\entity_sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="tileMapSprite.h">
+      <Filter>Header Files\entity_sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="tileMap.h">
+      <Filter>Header Files\entity_types</Filter>
+    </ClInclude>
+    <ClInclude Include="particleSystem.h">
+      <Filter>Header Files\entity_types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

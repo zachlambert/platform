@@ -7,24 +7,35 @@
 #include "motion.h"
 #include "animator.h"
 
-class Player: public SpriteEntity, public Physical, public Animated{
+class Player: public EntityTemplate<PhysicalEntity,SpriteSheetSprite>, public Animated{
 public:
 	Player(const SpriteSheet& spriteSheet, const Resources& resources);
 
-	virtual sf::Transformable& t(){ return SpriteEntity::t(); }
-
 	virtual void update(float seconds);
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states)const { target.draw(s()); }
+
+	//For Entity
+	sf::Transformable& t() { return s(); }
+	const sf::Transformable& t()const { return s(); }
+
+	//For PhysicalEntity
+	void setOffGround();
+	void setOnGround();
+
+	//Player specific functions
 
 	void moveLeft();
 	void moveRight();
 	void stopHorizontalMovement();
 
 	void jump();
-	void setOffGround();
-	void setOnGround();
 
 	void startRunning();
 	void stopRunning();
+
+protected:
+
+	virtual const sf::Drawable& getDrawable()const { return s(); }
 
 private:
 

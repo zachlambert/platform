@@ -2,8 +2,7 @@
 #include "player.h"
 
 Player::Player(const SpriteSheet& spriteSheet, const Resources& resources):
-	    SpriteEntity(spriteSheet),
-	    Physical(),
+	    EntityTemplate(SpriteSheetSprite(spriteSheet)),
 	    Animated(resources),
 	    horizontalSpeed(WALK_SPEED){
 

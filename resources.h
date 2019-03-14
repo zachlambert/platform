@@ -5,7 +5,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "tilemap.h"
+#include "tileMapSprite.h"
 
 class TileMapData;
 

@@ -1,4 +1,4 @@
-#include "tilemap.h"
+#include "tileMapSprite.h"
 #include <algorithm>
 
 TileMapData::TileMapData(const std::string& name,const SpriteSheet& spriteSheet,const std::vector<int> tiles,
@@ -31,7 +31,7 @@ sf::Vector2f getTilePosition(int x,int y,const sf::Vector2u& tileSize){
 	return sf::Vector2f(x*tileSize.x,y*tileSize.y);
 }
 
-TileMap::TileMap(const TileMapData& tilemap):
+TileMapSprite::TileMapSprite(const TileMapData& tilemap):
 		TexturedVertexArraySprite(tilemap.getSpriteSheet().getTexture()),tileMapData(tilemap){
 	
 	//Set primitive type and number of vertices

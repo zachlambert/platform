@@ -1,6 +1,6 @@
-#include "polygonShape.h"
+#include "polygonSprite.h"
 
-PolygonShape::PolygonShape(const std::vector<float>& points,const sf::Color& color){
+PolygonSprite::PolygonSprite(const std::vector<float>& points,const sf::Color& color){
 	vertices.setPrimitiveType(sf::LineStrip);
 	vertices.resize(points.size()/2+1);
 	for(std::vector<float>::size_type i=0;i<points.size()/2;i++){
@@ -11,7 +11,7 @@ PolygonShape::PolygonShape(const std::vector<float>& points,const sf::Color& col
 	vertices[points.size()/2].color = color;
 }
 
-PolygonShape::PolygonShape(const std::vector<sf::Vector2f>& points,const sf::Color& color){
+PolygonSprite::PolygonSprite(const std::vector<sf::Vector2f>& points,const sf::Color& color){
 	vertices.setPrimitiveType(sf::LineStrip);
 	vertices.resize(points.size()+1);
 	for(std::vector<sf::Vector2f>::size_type i=0;i<points.size();i++){

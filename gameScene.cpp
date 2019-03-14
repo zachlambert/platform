@@ -6,7 +6,7 @@
 */
 
 #include "gameScene.h"
-#include "polygonShape.h"
+#include "polygonSprite.h"
 #include "hitbox.h"
 #include <vector>
 #include <SFML/Graphics/Rect.hpp>
@@ -14,7 +14,8 @@
 GameScene::GameScene(sf::RenderWindow& window,const Resources& resources):
 		Scene(window,resources),
         player(resources.getSpriteSheet("rough_spritesheet.png"), resources),
-		tileMap(resources.getTileMapData("example_tilemap")){
+		tileMap(resources.getTileMapData("example_tilemap")),
+        particleSystem(100){
 	
 	tileMap.t().setPosition(100,0);
 	
@@ -91,6 +92,8 @@ void GameScene::update(float seconds){
 	//Update entities, excluding movement
 
 	player.update(seconds);
+	particleSystem.update(seconds);
+	particleSystem.s().setSource(player.t().getPosition());
 
 	//Move the entities
 
@@ -106,6 +109,7 @@ void GameScene::update(float seconds){
 void GameScene::draw(sf::RenderTarget& target,sf::RenderStates states)const{
 	target.draw(tileMap);
 	target.draw(player);
+	target.draw(particleSystem);
 	//drawHitbox(target,player.t(),player.h());
 }
 
@@ -113,7 +117,7 @@ void GameScene::moveEntities(){
 	moveEntity(player);
 }
 
-void GameScene::moveEntity(Physical& physical){
+void GameScene::moveEntity(PhysicalEntity& physical){
 
 	physical.t().move(physical.m().getDisplacement());
 
@@ -184,8 +188,8 @@ void GameScene::moveEntity(Physical& physical){
 
 }
 
-bool GameScene::collideSolid(Physical& physical){
+bool GameScene::collideSolid(PhysicalEntity& physical){
 	//Currently only checks for collision with the tilemap, but other solid entities may be included
 
-	return collideTileMap(tileMap.tm(), physical.t(), physical.h());
+	return collideTileMap(tileMap.s(), physical.t(), physical.h());
 }

@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "resources.h"
-#include "spriteUSS.h"
+#include "spriteSheetSprite.h"
 
 class CompoundSprite: public sf::Transformable, public sf::Drawable{
 public:
@@ -16,7 +16,7 @@ public:
 	void setFrame(int spriteIndex,int frame);
 
 private:
-	std::vector<SpriteUSS> sprites;
+	std::vector<SpriteSheetSprite> sprites;
 
 };
 

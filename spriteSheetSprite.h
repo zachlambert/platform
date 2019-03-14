@@ -4,11 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include "resources.h"
 
-//SpriteUSS = Sprite Using SpriteSheet
-
-class SpriteUSS: public sf::Sprite{
+class SpriteSheetSprite: public sf::Sprite{
 public:
-	SpriteUSS(const SpriteSheet& spriteSheet);
+	SpriteSheetSprite(const SpriteSheet& spriteSheet);
 	
 	void setSpriteSheet(const SpriteSheet&);
 	void setFrame(int);
