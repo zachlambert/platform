@@ -26,12 +26,16 @@ I have decided to structure the entity classes as follows:
 	 an sf::Transformable. This allows access to sf::Transformable functions without having
 	 to redefine them in entity.
 
-	-For any functionality which is likely to be required by multiple entities (such as animation),
-	 functionality is implemented in a separate class, independent of entities, and then an object
-	 is included in the entity. Access to this object can be provided by concise getter functions,
-	 like with sf::Transformable.
-	-Doing it this way allows for more modular code, and avoid the need for things like multiple
-	 inheritance, while still allowing flexibility in what functions are provided.
+	-For additional functionality, non-entity classes are defined, such as "Physical" and "Animated".
+	 These can then be inherited by entities, to include the functionality.
+
+For the Physical class, it redefines the t() function as a virtual function and requires that the child
+entity redefines it. This is required in order to provide the Physical class with access to the sf::Transformable.
+The Physical class is required, for passing entities to functions for updating movement and checking collisions.
+
+The t() function can be defined using the t() function defined in the SpriteEntity, CompountSpriteEntity, etc... :
+virtual sf::Transformable& t(){ return SpriteEntity::t(); }
+-somehow this works
 
 */
 
@@ -146,5 +150,38 @@ private:
 
 	TileMap tileMap;
 };
+
+
+class Physical{
+public:
+	Physical():hitbox(),motion(){}
+
+
+	virtual sf::Transformable& t()=0;
+	Hitbox& h(){ return hitbox; }
+	const Hitbox& h()const{ return hitbox; }
+	Motion& m(){ return motion; }
+	const Motion& m()const{ return motion; } 
+
+	virtual void setOnGround()=0;
+	virtual void setOffGround()=0;
+
+protected:
+	Hitbox hitbox;
+	Motion motion;
+
+};
+
+class Animated {
+public:
+	Animated(const Resources& resources) :animator(resources) {}
+
+	Animator& a() { return animator; }
+	const Animator& a()const { return animator; }
+
+protected:
+	Animator animator;
+};
+
 
 #endif

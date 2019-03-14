@@ -6,8 +6,6 @@
 #include <SFML/Graphics.hpp>
 #include "tilemap.h"
 
-class TileMap;
-
 struct HitboxType{
 	enum{
 		NONE,

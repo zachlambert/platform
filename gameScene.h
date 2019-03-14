@@ -25,12 +25,12 @@ public:
 	
 private:
 	Player player;
-	SpriteEntity entity2;
-	sf::Text textEntity;
-	sf::Sound testSound;
-	sf::Music music;
 	TileMapEntity tileMap;
-	ParticleSystemEntity particles;
+
+	void moveEntities();
+	void moveEntity(Physical& physical);
+	bool collideSolid(Physical& physical);
+
 };
 
 #endif

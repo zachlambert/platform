@@ -21,6 +21,8 @@ public:
 	void setAccelerationY(float ay){ acceleration.y = ay; }
 
 	const sf::Vector2f& getDisplacement()const{ return displacement; }
+	const sf::Vector2f& getVelocity()const{ return velocity; }
+	const sf::Vector2f& getAcceleration()const{ return acceleration; }
 
 	void setInFreeFall(bool inFreeFall);
 	bool isInFreeFall()const{ return inFreeFall; }

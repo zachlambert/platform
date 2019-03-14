@@ -7,31 +7,26 @@
 #include "motion.h"
 #include "animator.h"
 
-class Player: public SpriteEntity{
+class Player: public SpriteEntity, public Physical, public Animated{
 public:
 	Player(const SpriteSheet& spriteSheet, const Resources& resources);
 
+	virtual sf::Transformable& t(){ return SpriteEntity::t(); }
+
 	virtual void update(float seconds);
 
-	Hitbox& h(){ return hitbox; }
-	const Hitbox& h()const{ return hitbox; }
-	Motion& m(){ return motion; }
-	const Motion& m()const{ return motion; }
-	Animator& a(){ return animator; }
-	const Animator& a()const{ return animator; }
-
-	void jump();
-	void startRunning();
-	void stopRunning();
 	void moveLeft();
 	void moveRight();
 	void stopHorizontalMovement();
 
-private:
+	void jump();
+	void setOffGround();
+	void setOnGround();
 
-	Hitbox hitbox;
-	Motion motion;
-	Animator animator;
+	void startRunning();
+	void stopRunning();
+
+private:
 
 	const float WALK_SPEED = 600;
 	const float RUN_SPEED = 1200;
