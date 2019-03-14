@@ -102,17 +102,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animator.cpp" />
-    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="compoundSprite.cpp" />
     <ClCompile Include="hitbox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="motion.cpp" />
     <ClCompile Include="music.cpp" />
     <ClCompile Include="particleSystem.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="polygonShape.cpp" />
     <ClCompile Include="resources.cpp" />
     <ClCompile Include="sceneManager.cpp" />
-    <ClCompile Include="simpleScene.cpp" />
+    <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="spriteUSS.cpp" />
     <ClCompile Include="texturedVertexArraySprite.cpp" />
     <ClCompile Include="tilemap.cpp" />
@@ -122,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animator.h" />
+    <ClInclude Include="compoundSprite.h" />
     <ClInclude Include="hitbox.h" />
     <ClInclude Include="handle.h" />
     <ClInclude Include="mainMenu.h" />
@@ -129,10 +131,11 @@
     <ClInclude Include="music.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="particleSystem.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="polygonShape.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="scene.h" />
-    <ClInclude Include="simpleScene.h" />
+    <ClInclude Include="gameScene.h" />
     <ClInclude Include="spriteUSS.h" />
     <ClInclude Include="texturedVertexArraySprite.h" />
     <ClInclude Include="tilemap.h" />
@@ -141,6 +144,9 @@
     <ClInclude Include="vertexArraySprite.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="doc\about.txt" />
+    <Text Include="doc\naming conventions.txt" />
+    <Text Include="doc\todo.txt" />
     <Text Include="resources\resources.txt" />
     <Text Include="resources\spriteSheetConfigs\irregular_spritesheet_config.txt" />
     <Text Include="resources\tilemaps\example_tilemap.txt" />

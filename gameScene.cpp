@@ -5,15 +5,15 @@
 
 */
 
-#include "simpleScene.h"
+#include "gameScene.h"
 #include "polygonShape.h"
 #include "hitbox.h"
 #include <vector>
 #include <SFML/Graphics/Rect.hpp>
 
-SimpleScene::SimpleScene(sf::RenderWindow& window,const Resources& resources):
-		Scene(window,resources),entity(resources.getSpriteSheet("rough_spritesheet.png"),resources),
-		entity2(resources.getSpriteSheet("irregular_spritesheet.png"),resources),textEntity(),testSound(),
+GameScene::GameScene(sf::RenderWindow& window,const Resources& resources):
+		Scene(window,resources),entity(resources.getSpriteSheet("rough_spritesheet.png")),
+		entity2(resources.getSpriteSheet("irregular_spritesheet.png")),textEntity(),testSound(),
 		tileMap(resources.getTileMapData("example_tilemap")),particles(800){
 	
 	entity.t().setPosition(200,100 + entity.s().getLocalBounds().height);
@@ -40,11 +40,15 @@ SimpleScene::SimpleScene(sf::RenderWindow& window,const Resources& resources):
 	view.zoom(2.f);
 }
 
-void SimpleScene::handleEvent(sf::Event event){
+void GameScene::handleEvent(sf::Event event){
 	if(event.type == sf::Event::KeyPressed){
 		if(event.key.code == sf::Keyboard::W){
 			if(!entity.m().isInFreeFall()){
-				entity.m().setVelocityY(-1100);
+				if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
+					entity.m().setVelocityY(-1800);
+				}else{
+					entity.m().setVelocityY(-1100);
+				}
 				entity.m().setInFreeFall(true);
 			}
 		}else if(event.key.code == sf::Keyboard::R){
@@ -74,9 +78,9 @@ void SimpleScene::handleEvent(sf::Event event){
 	}
 }
 
-void SimpleScene::update(float seconds){
+void GameScene::update(float seconds){
 
-	//Respond to user input
+	//Update player velocity
 
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
 		if(!entity.m().isInFreeFall()){
@@ -197,10 +201,10 @@ void SimpleScene::update(float seconds){
 	particles.update(seconds);
 
 }
-void SimpleScene::draw(sf::RenderTarget& target,sf::RenderStates states)const{
-	target.draw(tileMap.d());
-	target.draw(entity.d());
-	target.draw(entity2.d());
-	target.draw(particles.d());
+void GameScene::draw(sf::RenderTarget& target,sf::RenderStates states)const{
+	target.draw(tileMap);
+	target.draw(entity);
+	target.draw(entity2);
+	target.draw(particles);
 	drawHitbox(target,entity.t(),entity.h());
 }

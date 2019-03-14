@@ -11,19 +11,20 @@
 
 #include "scene.h"
 #include "entity.h"
+#include "player.h"
 #include "tilemap.h"
 #include "music.h"
 
-class SimpleScene: public Scene{
+class GameScene: public Scene{
 public:
-	SimpleScene(sf::RenderWindow&,const Resources&);
+	GameScene(sf::RenderWindow&,const Resources&);
 	
 	virtual void handleEvent(sf::Event);
 	virtual void update(float);
 	virtual void draw(sf::RenderTarget& target,sf::RenderStates states)const;
 	
 private:
-	SpriteEntity entity;
+	Player entity;
 	SpriteEntity entity2;
 	sf::Text textEntity;
 	sf::Sound testSound;

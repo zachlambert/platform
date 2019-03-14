@@ -31,9 +31,6 @@
     <Filter Include="Resource Files\tilemaps">
       <UniqueIdentifier>{7e5b0f3a-d14a-4876-bc39-19e691d2d6be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\entity">
-      <UniqueIdentifier>{14350298-a5c7-48c5-8f13-557aa0844410}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\main">
       <UniqueIdentifier>{ba882a14-95d8-4680-83b7-ca1df7a59da1}</UniqueIdentifier>
     </Filter>
@@ -42,9 +39,6 @@
     </Filter>
     <Filter Include="Header Files\utility">
       <UniqueIdentifier>{60c2de7a-831a-4469-905b-e97a78c45485}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\entity">
-      <UniqueIdentifier>{a7e196e0-a082-4b8b-80d5-d4cbf5a3b46e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\main">
       <UniqueIdentifier>{f2ea96ca-90c4-422a-9a74-6e29f447a3a2}</UniqueIdentifier>
@@ -55,28 +49,43 @@
     <Filter Include="Source Files\utility">
       <UniqueIdentifier>{a2b08eae-a87c-411b-902b-89b9ea9c6054}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{fe91e954-e1d1-4e87-a055-e52fee833485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\entity_core">
+      <UniqueIdentifier>{14350298-a5c7-48c5-8f13-557aa0844410}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entity_core">
+      <UniqueIdentifier>{a7e196e0-a082-4b8b-80d5-d4cbf5a3b46e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\entity_types">
+      <UniqueIdentifier>{544173da-50dd-4d15-ad97-9d5fabd30d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entity_types">
+      <UniqueIdentifier>{1fcd8ef3-3b80-4ae4-8c05-fb1d6a8cda24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animator.cpp">
-      <Filter>Source Files\entity</Filter>
+      <Filter>Source Files\entity_core</Filter>
     </ClCompile>
     <ClCompile Include="particleSystem.cpp">
-      <Filter>Source Files\entity</Filter>
+      <Filter>Source Files\entity_core</Filter>
     </ClCompile>
     <ClCompile Include="polygonShape.cpp">
-      <Filter>Source Files\entity</Filter>
+      <Filter>Source Files\entity_core</Filter>
     </ClCompile>
     <ClCompile Include="spriteUSS.cpp">
-      <Filter>Source Files\entity</Filter>
+      <Filter>Source Files\entity_core</Filter>
     </ClCompile>
     <ClCompile Include="texturedVertexArraySprite.cpp">
-      <Filter>Source Files\entity</Filter>
+      <Filter>Source Files\entity_core</Filter>
     </ClCompile>
     <ClCompile Include="tilemap.cpp">
-      <Filter>Source Files\entity</Filter>
+      <Filter>Source Files\entity_core</Filter>
     </ClCompile>
     <ClCompile Include="vertexArraySprite.cpp">
-      <Filter>Source Files\entity</Filter>
+      <Filter>Source Files\entity_core</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files\main</Filter>
@@ -90,9 +99,6 @@
     <ClCompile Include="sceneManager.cpp">
       <Filter>Source Files\scene</Filter>
     </ClCompile>
-    <ClCompile Include="simpleScene.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClCompile>
     <ClCompile Include="music.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
@@ -103,36 +109,42 @@
       <Filter>Source Files\utility</Filter>
     </ClCompile>
     <ClCompile Include="hitbox.cpp">
-      <Filter>Source Files\entity</Filter>
+      <Filter>Source Files\entity_core</Filter>
     </ClCompile>
     <ClCompile Include="motion.cpp">
-      <Filter>Source Files\entity</Filter>
+      <Filter>Source Files\entity_core</Filter>
     </ClCompile>
-    <ClCompile Include="entity.cpp">
-      <Filter>Source Files\entity</Filter>
+    <ClCompile Include="compoundSprite.cpp">
+      <Filter>Source Files\entity_core</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\entity_types</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene.cpp">
+      <Filter>Source Files\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animator.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="particleSystem.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="polygonShape.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="spriteUSS.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="texturedVertexArraySprite.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="tilemap.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="vertexArraySprite.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="handle.h">
       <Filter>Header Files\utility</Filter>
@@ -152,20 +164,26 @@
     <ClInclude Include="scene.h">
       <Filter>Header Files\scene</Filter>
     </ClInclude>
-    <ClInclude Include="simpleScene.h">
-      <Filter>Header Files\scene</Filter>
-    </ClInclude>
     <ClInclude Include="resources.h">
       <Filter>Header Files\main</Filter>
     </ClInclude>
     <ClInclude Include="entity.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="hitbox.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
     </ClInclude>
     <ClInclude Include="motion.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Header Files\entity_core</Filter>
+    </ClInclude>
+    <ClInclude Include="compoundSprite.h">
+      <Filter>Header Files\entity_core</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files\entity_types</Filter>
+    </ClInclude>
+    <ClInclude Include="gameScene.h">
+      <Filter>Header Files\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +195,15 @@
     </Text>
     <Text Include="resources\spriteSheetConfigs\irregular_spritesheet_config.txt">
       <Filter>Resource Files\spriteSheetConfigs</Filter>
+    </Text>
+    <Text Include="doc\about.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+    <Text Include="doc\naming conventions.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+    <Text Include="doc\todo.txt">
+      <Filter>Documentation</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

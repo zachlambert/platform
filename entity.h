@@ -1,30 +1,37 @@
-/* NEW ENTITY h//
+/* ENTITY h//
 
 ### PURPOSE ###
--Defines NewEntity class (rename to Entity when implemented)
+-Defines the parent Entity class and some core child entity classes
 
-### NEW ENTITY INTERFACE ###
+### ENTITY CLASS ###
 
-Constructor:
-	Takes resources to store
+An entity is something which:
+	-Can be drawn
+	-Can be transformed
+	-Can run internal logic to update its state
+	-Can implement additional functionality for specific entities
+	
+I have decided to structure the entity classes as follows:
 
-getters:
-	These are defined as return nullptr here, but will
-	be overloaded in child classes, when they implement
-	different funcionality
-	-d	  | < These two may return a pointer to the same object. Would ideally just return a sprite, but some entities
-	-t | < may use vertexArraySprite, which is a custom sprite, which extends drawable and transformable. 
-	-m
-	-h
-	-a
+	-Entity extends sf::Drawable, such that you can call target.draw(entity)
+	-Entity defines a virtual getDrawable() function, which must be overloaded.
+	 Child classes will contain the object they wish to draw, they won't extend it.
+	 Then, access to this object is provided by overloading the getDrawable() function,
+	 which the parent Entity class used in its draw(...) function.
 
-Objects for these getters are classes, which may have some methods
+	-Entity defines a virtual update(float seconds) function which must be
+	 overloaded. (Can be overloaded with an empty function if not using it)
+	
+	-Entity defines a virtual t() function, which is a concise getter function for
+	 an sf::Transformable. This allows access to sf::Transformable functions without having
+	 to redefine them in entity.
 
-Non-member functions are used to update entities instead of having internal update methods
-
-Note: There are non-const and const methods of each of the s,t,d,m,h,a, because they need to be accessible for modification, and accessible in
-const functions. For example, the draw function (overriding sf::Drawable draw), must be const, so all functions called in it must be const. Therefore,
-if you want to access the transformable for position, you need to get a const pointer.
+	-For any functionality which is likely to be required by multiple entities (such as animation),
+	 functionality is implemented in a separate class, independent of entities, and then an object
+	 is included in the entity. Access to this object can be provided by concise getter functions,
+	 like with sf::Transformable.
+	-Doing it this way allows for more modular code, and avoid the need for things like multiple
+	 inheritance, while still allowing flexibility in what functions are provided.
 
 */
 
@@ -40,78 +47,83 @@ if you want to access the transformable for position, you need to get a const po
 #include "animator.h"
 
 #include "spriteUSS.h"
+#include "compoundSprite.h"
 #include "particleSystem.h"
 #include "tilemap.h"
 
-class Entity {
+class Entity: public sf::Drawable{
 public:
 
 	Entity() {}
 
-	virtual void update(float seconds) = 0;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states)const{ target.draw(getDrawable()); }
 
-	virtual sf::Drawable& d() = 0;
-	virtual const sf::Drawable& d()const = 0;
+	virtual void update(float seconds) = 0;
 
 	virtual sf::Transformable& t() = 0;
 	virtual const sf::Transformable& t()const = 0;
+
+private:
+	
+	virtual const sf::Drawable& getDrawable()const = 0;
 
 };
 
 
 class SpriteEntity : public Entity {
 public:
-	SpriteEntity(const SpriteSheet& spriteSheet, const Resources& resources) :sprite(spriteSheet), motion(), hitbox(), animator() {}
-	SpriteEntity(const SpriteSheet& spriteSheet, const Resources& resources, const Hitbox& hitbox) :sprite(spriteSheet), motion(), hitbox(hitbox), animator() {}
+	SpriteEntity(const SpriteSheet& spriteSheet) :sprite(spriteSheet){}
 
-	void update(float seconds);
+	virtual void update(float seconds){} //Do nothing
 
 	sf::Transformable& t() { return sprite; }
 	const sf::Transformable& t()const { return sprite; }
-
-	sf::Drawable& d() { return sprite; }
-	const sf::Drawable& d()const { return sprite; }
 
 	SpriteUSS& s() { return sprite; }
 	const SpriteUSS& s()const { return sprite; }
 
-	Motion& m() { return motion; }
-	const Motion& m()const { return motion; }
-
-	Hitbox& h() { return hitbox; }
-	const Hitbox& h()const { return hitbox; }
-
-	Animator& a() { return animator; }
-	const Animator& a()const { return animator; }
-
 private:
 
-	//Entity components
+	virtual const sf::Drawable& getDrawable()const{ return sprite; }
+
 	SpriteUSS sprite;
-	Motion motion;
-	Hitbox hitbox;
-	Animator animator;
 
 };
 
-
-class ParticleSystemEntity : public Entity {
+class CompoundSpriteEntity: public Entity{
 public:
-	ParticleSystemEntity(int count) :sprite(count) {}
+	CompoundSpriteEntity():sprite(){}
 
-	void update(float seconds) { sprite.update(seconds); }
+	virtual void update(float seconds){} //Do nothing
 
 	sf::Transformable& t() { return sprite; }
-	const sf::Transformable& t()const { return sprite; }
+	const sf::Transformable& t()const{ return sprite; }
 
-	sf::Drawable& d() { return sprite; }
-	const sf::Drawable& d()const { return sprite; }
-
-	ParticleSystem& ps() { return sprite; }
+	CompoundSprite& cs(){ return sprite; }
 
 private:
 
-	ParticleSystem sprite;
+	virtual const sf::Drawable& getDrawable()const{ return sprite; }
+
+	CompoundSprite sprite;
+};
+
+class ParticleSystemEntity : public Entity {
+public:
+	ParticleSystemEntity(int count) :particleSystem(count) {}
+
+	virtual void update(float seconds) { particleSystem.update(seconds); }
+
+	sf::Transformable& t() { return particleSystem; }
+	const sf::Transformable& t()const { return particleSystem; }
+
+	ParticleSystem& ps() { return particleSystem; }
+
+private:
+
+	virtual const sf::Drawable& getDrawable()const { return particleSystem; }
+
+	ParticleSystem particleSystem;
 
 };
 
@@ -120,18 +132,18 @@ class TileMapEntity: public Entity{
 public:
 	TileMapEntity(const TileMapData& tileMapData):tileMap(tileMapData){}
 
-	void update(float seconds){} //Do nothing
+	virtual void update(float seconds){} //Do nothing
 
 	sf::Transformable& t(){ return tileMap; }
 	const sf::Transformable& t()const{ return tileMap; }
-
-	sf::Drawable& d(){ return tileMap; }
-	const sf::Drawable& d()const{ return tileMap; }
 
 	TileMap& tm(){ return tileMap; }
 	const TileMap& tm()const{ return tileMap; }
 
 private:
+
+	virtual const sf::Drawable& getDrawable()const { return tileMap; }
+
 	TileMap tileMap;
 };
 

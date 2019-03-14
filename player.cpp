@@ -1,7 +1,7 @@
 
-#include "entity.h"
+#include "player.h"
 
-void SpriteEntity::update(float seconds) {
+void Player::update(float seconds) {
 
 	m().update(seconds);
 

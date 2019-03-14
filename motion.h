@@ -8,7 +8,7 @@ public:
 
 	Motion():displacement(0,0), velocity(0, 0), acceleration(0, 0), inFreeFall(false) {}
 
-	void update(float seconds) { displacement = velocity*seconds + 0.5f*acceleration*pow(seconds,2); velocity += acceleration*seconds; }
+	void update(float seconds);
 
 	void setVelocity(sf::Vector2f velocity) { this->velocity = velocity; }
 	void setVelocity(float vx,float vy){ this->velocity = sf::Vector2f(vx,vy); }

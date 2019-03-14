@@ -7,7 +7,7 @@
 
 
 #include "mainMenu.h"
-#include "simpleScene.h"
+#include "gameScene.h"
 #include <iostream>
 
 MainMenu::MainMenu(sf::RenderWindow& window,const Resources& resources):Scene(window,resources),gui(window){
@@ -15,7 +15,7 @@ MainMenu::MainMenu(sf::RenderWindow& window,const Resources& resources):Scene(wi
 	button->setSize(200,50);
 	button->setPosition(window.getSize().x/2-100,window.getSize().y/2-25);
 	button->setText("Start Game");
-	button->connect("pressed",changeSceneFunctor(this,new SimpleScene(window,resources)));
+	button->connect("pressed",changeSceneFunctor(this,new GameScene(window,resources)));
 
 	gui.add(button,"mainButton");
 }
@@ -24,9 +24,8 @@ void MainMenu::handleEvent(sf::Event event){
 	gui.handleEvent(event);
 }
 
-void MainMenu::update(float seconds){
-	
-}
+void MainMenu::update(float seconds){} //Do nothing
+
 void MainMenu::draw(sf::RenderTarget& target,sf::RenderStates states)const{
 	gui.draw();
 }
