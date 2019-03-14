@@ -7,11 +7,11 @@
 
 class Animator{
 public:
-	Animator():animation(0),frameIndex(0),timer(),speed(1),looping(false),paused(false){}
+	Animator(const Resources& resources):resources(resources),animation(0),frameIndex(0),timer(),speed(1),looping(false),paused(false){}
 	const bool update(float);
 	const int getFrame()const{ return frameIndex; }
 	
-	void startAnimation(const Animation*,bool);
+	void startAnimation(std::string,bool);
 	void pauseAnimation();
 	void resumeAnimation();
 	void resetAnimation();
@@ -20,6 +20,7 @@ public:
 	void setAnimationSpeed(float speed){ this->speed = speed; }
 	const float getAnimationSpeed()const{ return speed; }
 private:
+	const Resources& resources;
 	const Animation* animation;
 	int frameIndex;
 	Timer timer;

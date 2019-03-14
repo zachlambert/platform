@@ -1,3 +1,6 @@
 
 Todo:
-- Clean up the code and add documentation to everything
+- Put all the code for moving entities and checking collisions somewhere else.
+- Change the way resources are retreived, such that an enum (or constants) are used instead of text.
+  It will probably also be better to just put all the resources configuration in a h/cpp file instead
+  of a text file.

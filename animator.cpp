@@ -23,8 +23,8 @@ const bool Animator::update(float seconds){
 	return updated;
 }
 
-void Animator::startAnimation(const Animation* animation,bool looping){
-	this->animation = animation;
+void Animator::startAnimation(std::string animationName,bool looping){
+	this->animation = &(resources.getAnimation(animationName));
 	frameIndex=0;
 	this->looping = looping;
 	timer.start(animation->duration/animation->frames.size());

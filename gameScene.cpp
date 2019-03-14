@@ -12,16 +12,13 @@
 #include <SFML/Graphics/Rect.hpp>
 
 GameScene::GameScene(sf::RenderWindow& window,const Resources& resources):
-		Scene(window,resources),entity(resources.getSpriteSheet("rough_spritesheet.png")),
-		entity2(resources.getSpriteSheet("irregular_spritesheet.png")),textEntity(),testSound(),
-		tileMap(resources.getTileMapData("example_tilemap")),particles(800){
-	
-	entity.t().setPosition(200,100 + entity.s().getLocalBounds().height);
-	entity.m().setInFreeFall(true);
-	entity.s().setScale(0.5f,0.5f);
-	entity.a().setAnimationSpeed(1.4);
-	entity.h() = Hitbox(-entity.s().getLocalBounds().width/2, -entity.s().getLocalBounds().height/2, entity.s().getLocalBounds().width, entity.s().getLocalBounds().height);
-	entity.s().setFrame(10);
+		Scene(window,resources),
+        player(resources.getSpriteSheet("rough_spritesheet.png"), resources),
+		entity2(resources.getSpriteSheet("irregular_spritesheet.png")),
+	    textEntity(),
+	    testSound(),
+		tileMap(resources.getTileMapData("example_tilemap")),
+	    particles(800){
 	
 	entity2.s().setFrame(1);
 	
@@ -43,19 +40,12 @@ GameScene::GameScene(sf::RenderWindow& window,const Resources& resources):
 void GameScene::handleEvent(sf::Event event){
 	if(event.type == sf::Event::KeyPressed){
 		if(event.key.code == sf::Keyboard::W){
-			if(!entity.m().isInFreeFall()){
-				if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
-					entity.m().setVelocityY(-1800);
-				}else{
-					entity.m().setVelocityY(-1100);
-				}
-				entity.m().setInFreeFall(true);
-			}
+			player.jump();
 		}else if(event.key.code == sf::Keyboard::R){
-			entity.t().setPosition(1450,300);
-			entity.m().setVelocity(0,0);
+			player.t().setPosition(1450,300);
+			player.m().setVelocity(0,0);
 		}else if(event.key.code == sf::Keyboard::LShift){
-			entity.a().setAnimationSpeed(2.8);
+			player.startRunning();
 		}else if(event.key.code == sf::Keyboard::U){
 			entity2.s().setFrame(0);
 		}else if(event.key.code == sf::Keyboard::I){
@@ -73,7 +63,7 @@ void GameScene::handleEvent(sf::Event event){
 		}
 	}else if(event.type == sf::Event::KeyReleased){
 		if(event.key.code == sf::Keyboard::LShift){
-			entity.a().setAnimationSpeed(1.4);
+			player.stopRunning();
 		}
 	}
 }
@@ -83,128 +73,101 @@ void GameScene::update(float seconds){
 	//Update player velocity
 
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-		if(!entity.m().isInFreeFall()){
-			if(entity.a().isInAnimation("walk_rough")){
-				entity.a().resumeAnimation();
-			}else{
-				entity.a().startAnimation(&resources.getAnimation("walk_rough"),true);
-			}
-		}
-		entity.s().setScale(-0.5f,0.5f);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
-			entity.m().setVelocityX(-1200);
-		}else{
-			entity.m().setVelocityX(-600);	
-		}
+		player.moveLeft();
 	}else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-		if(!entity.m().isInFreeFall()){
-			if(entity.a().isInAnimation("walk_rough")){
-				entity.a().resumeAnimation();
-			}else{
-				entity.a().startAnimation(&resources.getAnimation("walk_rough"),true);
-			}
-		}
-		entity.s().setScale(0.5f,0.5f);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
-			entity.m().setVelocityX(1200);
-		}else{
-			entity.m().setVelocityX(600);	
-		}
+		player.moveRight();
 	}else{
-		entity.m().setVelocityX(0);
-		entity.a().pauseAnimation();
-		if(!entity.m().isInFreeFall()){
-			entity.s().setFrame(10);
-		}
+		player.stopHorizontalMovement();
 	}
 	
-	if(entity.m().isInFreeFall()){
-		if(entity.a().isInAnimation("walk_rough")){
-			entity.a().pauseAnimation();
+	if(player.m().isInFreeFall()){
+		if(player.a().isInAnimation("walk_rough")){
+			player.a().pauseAnimation();
 		}
-		entity.s().setFrame(8);
+		player.s().setFrame(8);
 	}
 	
 	
 	//Check if on ground
-	entity.t().move(0,5);
-	if(!collideTileMap(tileMap.tm(),entity.t(),entity.h())){
-		entity.t().move(0,-5);
-		entity.m().setInFreeFall(true);
+	player.t().move(0,5);
+	if(!collideTileMap(tileMap.tm(),player.t(),player.h())){
+		player.t().move(0,-5);
+		player.m().setInFreeFall(true);
 	}else{
-		entity.t().move(0,-5);
-		entity.m().setInFreeFall(false);
+		player.t().move(0,-5);
+		player.m().setInFreeFall(false);
 	}
 	
 	//Update entities
 
-	entity.update(seconds);
+	player.update(seconds);
 
 	//Move entity
 
-	entity.t().move(entity.m().getDisplacement());
+	player.t().move(player.m().getDisplacement());
 
-	if(collideTileMap(tileMap.tm(),entity.t(),entity.h())){
-		entity.t().move(-entity.m().getDisplacement());
+	if(collideTileMap(tileMap.tm(),player.t(),player.h())){
+		player.t().move(-player.m().getDisplacement());
 	
 		static const float halfMinIncrement = 0.5f; //Min increment is 1, use half since this is what the increment would be after incrementing then halving.
 		
-		float moveIncrement = entity.m().getDisplacement().x/2;
+		float moveIncrement = player.m().getDisplacement().x/2;
 		float moved = 0;
 		while(abs(moveIncrement)>halfMinIncrement){
-			entity.t().move(moveIncrement,0);
-			if(collideTileMap(tileMap.tm(),entity.t(),entity.h())){
-				entity.t().move(-moveIncrement,0);
+			player.t().move(moveIncrement,0);
+			if(collideTileMap(tileMap.tm(),player.t(),player.h())){
+				player.t().move(-moveIncrement,0);
 			}else{
 				moved+=moveIncrement;
 			}
 			moveIncrement/=2;
 		}
 		if(abs(moveIncrement)<=halfMinIncrement){
-			entity.t().move(entity.m().getDisplacement().x-moved,0);
-			if(collideTileMap(tileMap.tm(),entity.t(),entity.h())){
-				entity.t().move(moved-entity.m().getDisplacement().x,0);
-				entity.m().setVelocityX(0);
+			player.t().move(player.m().getDisplacement().x-moved,0);
+			if(collideTileMap(tileMap.tm(),player.t(),player.h())){
+				player.t().move(moved-player.m().getDisplacement().x,0);
+				player.m().setVelocityX(0);
 			}
 		}else{
-			entity.m().setVelocityX(0);
+			player.m().setVelocityX(0);
 		}
 		
-		moveIncrement = entity.m().getDisplacement().y/2;
+		moveIncrement = player.m().getDisplacement().y/2;
 		moved = 0;
 		while(abs(moveIncrement)>halfMinIncrement){
-			entity.t().move(0,moveIncrement);
-			if(collideTileMap(tileMap.tm(),entity.t(),entity.h())){
-				entity.t().move(0,-moveIncrement);
+			player.t().move(0,moveIncrement);
+			if(collideTileMap(tileMap.tm(),player.t(),player.h())){
+				player.t().move(0,-moveIncrement);
 			}else{
 				moved+=moveIncrement;
 			}
 			moveIncrement/=2;
 		}
 		if(abs(moveIncrement)<=halfMinIncrement){
-			entity.t().move(0,entity.m().getDisplacement().y-moved);
-			if(collideTileMap(tileMap.tm(),entity.t(),entity.h())){
-				entity.t().move(0,moved-entity.m().getDisplacement().y);
-				entity.m().setInFreeFall(false);
-				entity.m().setVelocityY(0);
+			player.t().move(0,player.m().getDisplacement().y-moved);
+			if(collideTileMap(tileMap.tm(),player.t(),player.h())){
+				player.t().move(0,moved-player.m().getDisplacement().y);
+				player.m().setInFreeFall(false);
+				player.m().setVelocityY(0);
 			}
 		}else{
-			entity.m().setVelocityY(0);
-			entity.m().setInFreeFall(false);
+			player.m().setVelocityY(0);
+			player.m().setInFreeFall(false);
 		}
 	}
 	
-	entity2.t().setPosition(entity.t().getPosition() + sf::Vector2f(0, 100));
-	view.setCenter(entity.t().getPosition());
+	entity2.t().setPosition(player.t().getPosition() + sf::Vector2f(0, 100));
+	view.setCenter(player.t().getPosition());
 
-	particles.ps().setSource(entity.t().getPosition()+sf::Vector2f(0,-60));
+	particles.ps().setSource(player.t().getPosition()+sf::Vector2f(0,-60));
 	particles.update(seconds);
 
 }
 void GameScene::draw(sf::RenderTarget& target,sf::RenderStates states)const{
 	target.draw(tileMap);
-	target.draw(entity);
+	target.draw(player);
 	target.draw(entity2);
 	target.draw(particles);
-	drawHitbox(target,entity.t(),entity.h());
+	target.draw(textEntity);
+	drawHitbox(target,player.t(),player.h());
 }

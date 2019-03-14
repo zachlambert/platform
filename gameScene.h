@@ -24,7 +24,7 @@ public:
 	virtual void draw(sf::RenderTarget& target,sf::RenderStates states)const;
 	
 private:
-	Player entity;
+	Player player;
 	SpriteEntity entity2;
 	sf::Text textEntity;
 	sf::Sound testSound;
