@@ -9,11 +9,13 @@ public:
 	VertexArraySprite(sf::PrimitiveType type,unsigned int vertexCount=0):vertices(type,vertexCount){}
 	
 	virtual void draw(sf::RenderTarget&, sf::RenderStates)const;
-	
+
 protected:
-	
+
 	sf::VertexArray vertices;
 
+	friend class TileMap;
+	friend class ParticleSystem;
 };
 
 #endif

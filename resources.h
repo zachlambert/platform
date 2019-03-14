@@ -5,7 +5,6 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "tileMapSprite.h"
 
 class TileMapData;
 
@@ -99,6 +98,30 @@ struct SoundData{
 	std::string name;
 	sf::SoundBuffer soundBuffer;
 	SoundData(const std::string& name,const sf::SoundBuffer& soundBuffer):name(name),soundBuffer(soundBuffer){}
+};
+
+class TileMapData {
+public:
+	TileMapData(const std::string&, const SpriteSheet&, const std::vector<int>, const sf::Vector2u, const sf::Vector2u, const std::vector<int>);
+
+	const std::string& getName()const { return name; }
+	const SpriteSheet& getSpriteSheet()const { return spriteSheet; }
+	const std::vector<int>& getTiles()const { return tiles; }
+	const int getTileFrameIndex(int x, int y)const;
+	const sf::Vector2u& getSize()const { return size; }
+	const sf::Vector2u& getTileSize()const { return tileSize; }
+	const int getTileCount()const { return tileCount; }
+	const bool isSolid(int)const;
+	const bool isSolid(int, int)const;
+
+private:
+	std::string name;
+	const SpriteSheet& spriteSheet;
+	std::vector<int> tiles;
+	sf::Vector2u size;
+	sf::Vector2u tileSize;
+	int tileCount;
+	std::vector<int> solidTiles;
 };
 
 class Resources{

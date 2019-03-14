@@ -3,9 +3,7 @@
 
 #include "resources.h"
 #include "entity.h"
-#include "hitbox.h"
-#include "motion.h"
-#include "animator.h"
+#include "spriteSheetSprite.h"
 
 class Player: public EntityTemplate<PhysicalEntity,SpriteSheetSprite>, public Animated{
 public:

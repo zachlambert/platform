@@ -7,7 +7,7 @@
 
 #include "gameScene.h"
 #include "polygonSprite.h"
-#include "hitbox.h"
+#include "collision.h"
 #include <vector>
 #include <SFML/Graphics/Rect.hpp>
 
@@ -93,7 +93,7 @@ void GameScene::update(float seconds){
 
 	player.update(seconds);
 	particleSystem.update(seconds);
-	particleSystem.s().setSource(player.t().getPosition());
+	particleSystem.setSource(player.t().getPosition());
 
 	//Move the entities
 
@@ -191,5 +191,5 @@ void GameScene::moveEntity(PhysicalEntity& physical){
 bool GameScene::collideSolid(PhysicalEntity& physical){
 	//Currently only checks for collision with the tilemap, but other solid entities may be included
 
-	return collideTileMap(tileMap.s(), physical.t(), physical.h());
+	return collideTileMap(tileMap, physical.t(), physical.h());
 }

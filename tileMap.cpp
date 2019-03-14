@@ -1,43 +1,17 @@
-#include "tileMapSprite.h"
+#include "tileMap.h"
 #include <algorithm>
-
-TileMapData::TileMapData(const std::string& name,const SpriteSheet& spriteSheet,const std::vector<int> tiles,
-		const sf::Vector2u size,const sf::Vector2u tileSize,const std::vector<int> solidTiles):
-			name(name),spriteSheet(spriteSheet),tiles(tiles),size(size),tileSize(tileSize),tileCount(0),solidTiles(solidTiles){
-	for(std::vector<int>::const_iterator iter=tiles.begin();iter!=tiles.end();iter++){
-		if(*iter!=-1){
-			tileCount++;
-		}
-	}
-}
-
-const int TileMapData::getTileFrameIndex(int x,int y)const{
-	int index = y*size.x+x;
-	if(x<0 || x>= size.x || y<0 || y>=size.y){
-		return -1;
-	}else{
-		return tiles[y*size.x+x];
-	}
-} 
-const bool TileMapData::isSolid(int frameIndex)const{
-	std::vector<int>::const_iterator iter = std::find(solidTiles.begin(),solidTiles.end(),frameIndex);
-	return iter!=solidTiles.end();
-}
-const bool TileMapData::isSolid(int x,int y)const{
-	return isSolid(getTileFrameIndex(x,y));
-}
 
 sf::Vector2f getTilePosition(int x,int y,const sf::Vector2u& tileSize){
 	return sf::Vector2f(x*tileSize.x,y*tileSize.y);
 }
 
-TileMapSprite::TileMapSprite(const TileMapData& tilemap):
-		TexturedVertexArraySprite(tilemap.getSpriteSheet().getTexture()),tileMapData(tilemap){
+TileMap::TileMap(const TileMapData& tilemap):
+		EntityTemplate(TexturedVertexArraySprite(tilemap.getSpriteSheet().getTexture())),tileMapData(tilemap){
 	
 	//Set primitive type and number of vertices
 	
-	vertices.setPrimitiveType(sf::Quads);
-	vertices.resize(tilemap.getTileCount()*4);
+	s().vertices.setPrimitiveType(sf::Quads);
+	s().vertices.resize(tilemap.getTileCount()*4);
 	
 	//Add tiles to the vertex array
 	
@@ -50,7 +24,7 @@ TileMapSprite::TileMapSprite(const TileMapData& tilemap):
 			if(frameIndex!=-1){
 				textureRect = tilemap.getSpriteSheet().getTextureRect(frameIndex);
 				
-				quad = &vertices[tilesPlaced*4];
+				quad = &s().vertices[tilesPlaced*4];
 				
 				quad[0].position = getTilePosition(x,y,tilemap.getTileSize());
 				quad[1].position = getTilePosition(x+1,y,tilemap.getTileSize());

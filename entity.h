@@ -10,11 +10,7 @@
 #include "motion.h"
 #include "hitbox.h"
 #include "animator.h"
-
-#include "spriteSheetSprite.h"
-#include "compoundSprite.h"
-#include "particleSystemSprite.h"
-#include "tileMapSprite.h"
+#include "resources.h"
 
 class Entity: public sf::Drawable{
 public:

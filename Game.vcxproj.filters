@@ -117,17 +117,20 @@
     <ClCompile Include="compoundSprite.cpp">
       <Filter>Source Files\entity_sprites</Filter>
     </ClCompile>
-    <ClCompile Include="particleSystemSprite.cpp">
-      <Filter>Source Files\entity_sprites</Filter>
-    </ClCompile>
     <ClCompile Include="polygonSprite.cpp">
       <Filter>Source Files\entity_sprites</Filter>
     </ClCompile>
     <ClCompile Include="spriteSheetSprite.cpp">
       <Filter>Source Files\entity_sprites</Filter>
     </ClCompile>
-    <ClCompile Include="tileMapSprite.cpp">
-      <Filter>Source Files\entity_sprites</Filter>
+    <ClCompile Include="tileMap.cpp">
+      <Filter>Source Files\entity_types</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="particleSystem.cpp">
+      <Filter>Source Files\entity_types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,20 +182,17 @@
     <ClInclude Include="compoundSprite.h">
       <Filter>Header Files\entity_sprites</Filter>
     </ClInclude>
-    <ClInclude Include="particleSystemSprite.h">
-      <Filter>Header Files\entity_sprites</Filter>
-    </ClInclude>
     <ClInclude Include="polygonSprite.h">
       <Filter>Header Files\entity_sprites</Filter>
     </ClInclude>
     <ClInclude Include="spriteSheetSprite.h">
       <Filter>Header Files\entity_sprites</Filter>
     </ClInclude>
-    <ClInclude Include="tileMapSprite.h">
-      <Filter>Header Files\entity_sprites</Filter>
-    </ClInclude>
     <ClInclude Include="tileMap.h">
       <Filter>Header Files\entity_types</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>Header Files\main</Filter>
     </ClInclude>
     <ClInclude Include="particleSystem.h">
       <Filter>Header Files\entity_types</Filter>
