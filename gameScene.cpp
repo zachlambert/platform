@@ -69,11 +69,12 @@ void GameScene::handleEvent(sf::Event event){
 
 	//Mouse press events
 	}else if(event.type == sf::Event::MouseButtonPressed){
-		switch(event.mouseButton.button){
-		case sf::Mouse::Left:
-			break;
-		case sf::Mouse::Right:
-			break;
+		if(event.mouseButton.button == sf::Mouse::Left){
+			sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+			sf::Vector2f position = window.mapPixelToCoords(mousePosition);
+			player.t().setPosition(position);
+		}else if(event.mouseButton.button == sf::Mouse::Right){
+
 		}
 
 	//Mouse release events
