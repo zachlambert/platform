@@ -23,8 +23,9 @@ const bool Animator::update(float seconds){
 	return updated;
 }
 
-void Animator::startAnimation(std::string animationName,bool looping){
-	this->animation = &(resources.getAnimation(animationName));
+void Animator::startAnimation(resource::Animation animationId,bool looping){
+	this->animationId = static_cast<int>(animationId);
+	this->animation = &(resources.getAnimation(animationId));
 	frameIndex=0;
 	this->looping = looping;
 	timer.start(animation->duration/animation->frames.size());
@@ -39,10 +40,6 @@ void Animator::resetAnimation(){
 	frameIndex=0;
 	timer.fullReset();
 }
-bool Animator::isInAnimation(const std::string& name){
-	if(animation){
-		return animation->name == name;
-	}else{
-		return false;
-	}
+bool Animator::isInAnimation(resource::Animation animationId){
+	return (this->animationId == static_cast<int>(animationId));
 }

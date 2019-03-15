@@ -197,6 +197,9 @@
     <ClInclude Include="particleSystem.h">
       <Filter>Header Files\entity_types</Filter>
     </ClInclude>
+    <ClInclude Include="resourceNames.h">
+      <Filter>Header Files\main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\resources.txt">

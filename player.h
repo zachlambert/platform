@@ -17,8 +17,8 @@ public:
 	const sf::Transformable& t()const { return s(); }
 
 	//For PhysicalEntity
-	void setOffGround();
-	void setOnGround();
+	virtual void setOffGround();
+	virtual void setOnGround();
 
 	//Player specific functions
 

@@ -15,6 +15,7 @@
 #include "tileMap.h"
 #include "particleSystem.h"
 #include "music.h"
+#include "resources.h"
 
 class GameScene: public Scene{
 public:
@@ -28,6 +29,7 @@ private:
 	Player player;
 	TileMap tileMap;
 	ParticleSystem particleSystem;
+	sf::Sound punchSound;
 
 	void moveEntities();
 	void moveEntity(PhysicalEntity& entity);

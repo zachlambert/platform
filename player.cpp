@@ -28,10 +28,10 @@ void Player::update(float seconds) {
 
 void Player::moveLeft() {
 	if (!m().isInFreeFall()) {
-		if (a().isInAnimation("walk_rough")) {
+		if (a().isInAnimation(resource::Animation::walkRough)) {
 			a().resumeAnimation();
 		}else{
-			a().startAnimation("walk_rough", true);
+			a().startAnimation(resource::Animation::walkRough, true);
 		}
 	}
 	s().setScale(-0.5f, 0.5f);
@@ -40,10 +40,10 @@ void Player::moveLeft() {
 
 void Player::moveRight() {
 	if (!m().isInFreeFall()) {
-		if (a().isInAnimation("walk_rough")) {
+		if (a().isInAnimation(resource::Animation::walkRough)) {
 			a().resumeAnimation();
 		}else{
-			a().startAnimation("walk_rough", true);
+			a().startAnimation(resource::Animation::walkRough, true);
 		}
 	}
 	s().setScale(0.5f, 0.5f);
@@ -74,7 +74,7 @@ void Player::setOffGround(){
 	m().setInFreeFall(true);
 
 	//Update appearance, stop walking animation
-	if (a().isInAnimation("walk_rough")) {
+	if (a().isInAnimation(resource::Animation::walkRough)) {
 		a().pauseAnimation();
 	}
 	s().setFrame(8);
@@ -86,10 +86,10 @@ void Player::setOnGround(){
 	//Update appearance, resume walking animation if moving, otherwise
 	//set frame to the stationary frame
 	if(m().getVelocity().x!=0){
-		if (a().isInAnimation("walk_rough")) {
+		if (a().isInAnimation(resource::Animation::walkRough)) {
 			a().resumeAnimation();
 		}else{
-			a().startAnimation("walk_rough", true);
+			a().startAnimation(resource::Animation::walkRough, true);
 		}
 	}else{
 		s().setFrame(10);

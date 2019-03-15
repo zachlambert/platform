@@ -5,8 +5,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-
-class TileMapData;
+#include "resourceNames.h"
 
 class BaseSSB{
 public:
@@ -82,10 +81,9 @@ private:
 };
 
 struct Animation{
-	const std::string name;
-	const float duration;
-	const std::vector<int> frames;
-	Animation(const std::string& name,float duration,const std::vector<int>& frames):name(name),duration(duration),frames(frames){}
+	float duration;
+	std::vector<int> frames;
+	Animation(float duration,const std::vector<int>& frames):duration(duration),frames(frames){}
 };
 
 struct FontData{
@@ -132,11 +130,11 @@ public:
 	std::vector<TileMapData> tilemapData;
 	std::vector<SoundData> sounds;
 	
-	const SpriteSheet& getSpriteSheet(const std::string&)const;
-	const Animation& getAnimation(const std::string&)const;
-	const TileMapData& getTileMapData(const std::string&)const;
-	const sf::Font& getFont(const std::string&)const;
-	const sf::SoundBuffer& getSoundBuffer(const std::string&)const;
+	const SpriteSheet& getSpriteSheet(resource::SpriteSheet)const;
+	const Animation& getAnimation(resource::Animation)const;
+	const TileMapData& getTileMapData(resource::TileMap)const;
+	const sf::Font& getFont(resource::Font)const;
+	const sf::SoundBuffer& getSoundBuffer(resource::Sound)const;
 };
 
 bool loadResources(Resources&);

@@ -5,19 +5,23 @@
 
 */
 
+#include <vector>
+#include <SFML/Graphics/Rect.hpp>
 #include "gameScene.h"
 #include "polygonSprite.h"
 #include "collision.h"
-#include <vector>
-#include <SFML/Graphics/Rect.hpp>
+#include "resourceNames.h"
 
 GameScene::GameScene(sf::RenderWindow& window,const Resources& resources):
 		Scene(window,resources),
-        player(resources.getSpriteSheet("rough_spritesheet.png"), resources),
-		tileMap(resources.getTileMapData("example_tilemap")),
-        particleSystem(100){
+        player(resources.getSpriteSheet(resource::SpriteSheet::roughSpriteSheet), resources),
+		tileMap(resources.getTileMapData(resource::TileMap::example)),
+        particleSystem(100),
+        punchSound(){
 	
 	tileMap.t().setPosition(100,0);
+	
+	punchSound.setBuffer(resources.getSoundBuffer(resource::Sound::punch1));
 	
 	view.zoom(2.f);
 }
@@ -41,6 +45,9 @@ void GameScene::handleEvent(sf::Event event){
 			break;
 		case sf::Keyboard::LShift:
 			player.startRunning();
+			break;
+		case sf::Keyboard::Space:
+			punchSound.play();
 			break;
 		}
 

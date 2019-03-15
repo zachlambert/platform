@@ -135,6 +135,7 @@
     <ClInclude Include="particleSystem.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="polygonSprite.h" />
+    <ClInclude Include="resourceNames.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="gameScene.h" />

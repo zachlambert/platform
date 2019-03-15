@@ -56,6 +56,7 @@ class Entity: public sf::Drawable{
 public:
 
 	Entity() {}
+	virtual ~Entity(){}
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states)const { target.draw(d()); }
 	virtual void update(float seconds) = 0;

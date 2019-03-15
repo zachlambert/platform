@@ -1,6 +1,15 @@
 
 Todo:
-- Put all the code for moving entities and checking collisions somewhere else.
-- Change the way resources are retreived, such that an enum (or constants) are used instead of text.
-  It will probably also be better to just put all the resources configuration in a h/cpp file instead
-  of a text file.
+- Continue to tidy up the resources:
+	- Change the way tilemaps are loaded (use a tilemap designer program)
+	- Maybe move animations out of resources, since they aren't really resources: they aren't loaded.
+	- Make the description of irregular spritesheets neater.
+- Test out the compound entity:
+	- Check it works
+	- Improve it, by allowing individual control of the sprites. The compound sprite will be a transformable,
+	  and this transform is applied to the sprites. However, the sprites should also be transformable, to
+	  change their relative position.
+- Add more entities and add collision events:
+	- Add some events for collisiosn between non-solid entities.
+	- Add some events for collisions with solid entities (not tilemap).
+	(Note: I don't need accurate physics)
