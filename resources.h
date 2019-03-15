@@ -100,26 +100,30 @@ struct SoundData{
 
 class TileMapData {
 public:
-	TileMapData(const std::string&, const SpriteSheet&, const std::vector<int>, const sf::Vector2u, const sf::Vector2u, const std::vector<int>);
+	TileMapData(const SpriteSheet& spriteSheet, const sf::Vector2u tileSize, const sf::Vector2u size,
+		    const std::vector<int> solidTiles, const std::vector<int> backgroundTiles, const std::vector<int> foregroundTiles) :
+		spriteSheet(spriteSheet), tileSize(tileSize), size(size), solidTiles(solidTiles), backgroundTiles(backgroundTiles), foregroundTiles(foregroundTiles){}
 
-	const std::string& getName()const { return name; }
 	const SpriteSheet& getSpriteSheet()const { return spriteSheet; }
-	const std::vector<int>& getTiles()const { return tiles; }
-	const int getTileFrameIndex(int x, int y)const;
-	const sf::Vector2u& getSize()const { return size; }
+
+	const int getTileFrameIndex(const std::vector<int>&, int x, int y)const;
 	const sf::Vector2u& getTileSize()const { return tileSize; }
-	const int getTileCount()const { return tileCount; }
-	const bool isSolid(int)const;
-	const bool isSolid(int, int)const;
+	const sf::Vector2u& getSize()const { return size; }
+	int getTileCount()const { return size.x*size.y; }
+
+	const std::vector<int>& getSolidTiles()const { return solidTiles; }
+	const std::vector<int>& getBackgroundTiles()const { return backgroundTiles; }
+	const std::vector<int>& getForegroundTiles()const { return foregroundTiles; }
+
+	bool isSolid(int x,int y)const;
 
 private:
-	std::string name;
 	const SpriteSheet& spriteSheet;
-	std::vector<int> tiles;
-	sf::Vector2u size;
 	sf::Vector2u tileSize;
-	int tileCount;
+	sf::Vector2u size;
 	std::vector<int> solidTiles;
+	std::vector<int> backgroundTiles;
+	std::vector<int> foregroundTiles;
 };
 
 class Resources{

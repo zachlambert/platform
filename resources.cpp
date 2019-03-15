@@ -4,6 +4,8 @@
 #include <sstream>
 #include <algorithm>
 #include "utility.h"
+#include "json.hpp"
+using json = nlohmann::json;
 
 struct SpriteSheetResource{
 	std::string imageName;
@@ -14,13 +16,7 @@ struct SpriteSheetResource{
 struct TileMapResource{
 	std::string name;
 	resource::SpriteSheet spriteSheet;
-	sf::Vector2u size;
-	sf::Vector2u tileSize;
-	int tileCount;
-	std::vector<int> solidTiles;
-
-	TileMapResource::TileMapResource(std::string name, resource::SpriteSheet spriteSheet,const sf::Vector2u size, const sf::Vector2u tileSize, const std::vector<int> solidTiles) :
-		name(name), spriteSheet(spriteSheet), size(size), tileSize(tileSize), tileCount(0), solidTiles(solidTiles){}
+	TileMapResource::TileMapResource(std::string name, resource::SpriteSheet spriteSheet):name(name),spriteSheet(spriteSheet){}
 };
 
 std::vector<SpriteSheetResource> spriteSheetResources = {
@@ -37,7 +33,7 @@ std::vector<Animation> animationResources = {
 };
 
 std::vector<TileMapResource> tileMapResources = {
-	TileMapResource("example_tilemap.txt",resource::SpriteSheet::levelsTileset,sf::Vector2u(64,64),sf::Vector2u(64,64),{0,1,2,3,4})
+	TileMapResource("example",resource::SpriteSheet::levelsTileset)
 };
 
 std::vector<std::string> fontResources = {
@@ -127,31 +123,22 @@ const sf::SoundBuffer& Resources::getSoundBuffer(resource::Sound sound)const{
 	}
 }
 
-TileMapData::TileMapData(const std::string& name, const SpriteSheet& spriteSheet, const std::vector<int> tiles,
-	const sf::Vector2u size, const sf::Vector2u tileSize, const std::vector<int> solidTiles) :
-	name(name), spriteSheet(spriteSheet), tiles(tiles), size(size), tileSize(tileSize), tileCount(0), solidTiles(solidTiles) {
-	for (std::vector<int>::const_iterator iter = tiles.begin(); iter != tiles.end(); iter++) {
-		if (*iter != -1) {
-			tileCount++;
-		}
-	}
-}
-
-const int TileMapData::getTileFrameIndex(int x, int y)const {
+const int TileMapData::getTileFrameIndex(const std::vector<int>& tiles, int x, int y)const {
 	int index = y * size.x + x;
 	if (x < 0 || x >= size.x || y < 0 || y >= size.y) {
-		return -1;
+		return 0;
 	}
 	else {
 		return tiles[y*size.x + x];
 	}
 }
-const bool TileMapData::isSolid(int frameIndex)const {
-	std::vector<int>::const_iterator iter = std::find(solidTiles.begin(), solidTiles.end(), frameIndex);
-	return iter != solidTiles.end();
-}
-const bool TileMapData::isSolid(int x, int y)const {
-	return isSolid(getTileFrameIndex(x, y));
+
+bool TileMapData::isSolid(int x,int y)const{
+	if(x<0 || x>=size.x || y<0 || y>=size.y){
+		return false;
+	}else{
+		return getTileFrameIndex(solidTiles,x,y)!=0;
+	}
 }
 
 void jumpTo(std::ifstream& file,std::string label){
@@ -206,32 +193,27 @@ bool loadResources(Resources& resources){
 
 	for(std::vector<TileMapResource>::const_iterator it = tileMapResources.begin(); it!=tileMapResources.end(); it++){
 		
-		std::vector<int> tiles;
-		
 		std::ifstream tilemapFile;
-		tilemapFile.open(("resources/tilemaps/" + it->name).c_str());
+		tilemapFile.open(("resources/tilemaps/" + it->name + "/tilemap.json").c_str());
 		if (!tilemapFile.is_open()) {
-			std::cout << "Couldn't open tilemap file " << it->name << std::endl;
+			std::cout << "Couldn't open tilemap file " << it->name << "/tilemap.json" << std::endl;
 			return false;
 		}
 
-		int height = 0;
-		std::string line;
-		std::vector<std::string> args;
-		while (std::getline(tilemapFile, line)) {
-			getArgs(line, args);
-			std::transform(args.begin(), args.end(), std::back_inserter(tiles), stringToInt);
-			if (args.size() < it->size.x) {
-				for (int i = 0; i < it->size.x - args.size(); i++) {
-					tiles.push_back(0);
-				}
-			}
-			height++;
-		}
-		tilemapFile.close();
+		json j;
+		j<<tilemapFile;
 
-		resources.tilemapData.push_back(TileMapData(it->name, resources.getSpriteSheet(it->spriteSheet),
-			tiles, sf::Vector2u(it->size.x,height), it->tileSize, it->solidTiles));
+		sf::Vector2u tileSize = sf::Vector2u(j["tilewidth"], j["tileheight"]);
+		sf::Vector2u size = sf::Vector2u(j["width"],j["height"]);
+		
+		std::vector<int> solidTiles = j["layers"][1]["data"];
+		std::vector<int> backgroundTiles = j["layers"][0]["data"];
+		std::vector<int> foregroundTiles = j["layers"][2]["data"];
+
+		resources.tilemapData.push_back(TileMapData(resources.getSpriteSheet(it->spriteSheet),
+			tileSize,size,solidTiles,backgroundTiles,foregroundTiles));
+	
+		tilemapFile.close();
 	}
 	
 	sf::SoundBuffer soundBuffer;

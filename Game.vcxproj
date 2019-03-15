@@ -128,6 +128,7 @@
     <ClInclude Include="compoundSprite.h" />
     <ClInclude Include="hitbox.h" />
     <ClInclude Include="handle.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="mainMenu.h" />
     <ClInclude Include="motion.h" />
     <ClInclude Include="music.h" />
@@ -150,7 +151,6 @@
     <Text Include="doc\about.txt" />
     <Text Include="doc\naming conventions.txt" />
     <Text Include="doc\todo.txt" />
-    <Text Include="resources\resources.txt" />
     <Text Include="resources\spriteSheetConfigs\irregular_spritesheet_config.txt" />
     <Text Include="resources\tilemaps\example_tilemap.txt" />
   </ItemGroup>

@@ -200,11 +200,11 @@
     <ClInclude Include="resourceNames.h">
       <Filter>Header Files\main</Filter>
     </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="resources\resources.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="resources\tilemaps\example_tilemap.txt">
       <Filter>Resource Files\tilemaps</Filter>
     </Text>

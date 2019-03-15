@@ -11,6 +11,8 @@ public:
 
 	virtual void update(float seconds){} //Do nothing
 
+	void TileMap::buildTileLayer(const std::vector<int>& tiles, int layerIndex);
+
 	const TileMapData& getTileMapData()const{ return tileMapData; }
 
 private:
