@@ -2,6 +2,6 @@
 
 void TexturedVertexArraySprite::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 	states.transform *= getTransform();
-	states.texture = &texture;
+	states.texture = texture;
 	target.draw(vertices,states);
 }

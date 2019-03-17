@@ -5,25 +5,24 @@ sf::Vector2f getTilePosition(int x,int y,const sf::Vector2u& tileSize){
 	return sf::Vector2f(x*tileSize.x,y*tileSize.y);
 }
 
-TileMap::TileMap(const TileMapData& tileMapData):
-		EntityTemplate(TexturedVertexArraySprite(tileMapData.getSpriteSheet().getTexture())),tileMapData(tileMapData){
-	
-	//Set primitive type and number of vertices
-	
-	s().vertices.setPrimitiveType(sf::Quads);
-	s().vertices.resize(tileMapData.getTileCount()*4*3); //3 layers
-	
+TileMap::TileMap(const TileMapData& tileMapData):tileLayers(static_cast<int>(TileMapLayer::NUMBER_OF_LAYERS)),tileMapData(tileMapData){
+
 	//Add tiles to the vertex array
-	buildTileLayer(tileMapData.getBackgroundTiles(),0);
-	buildTileLayer(tileMapData.getSolidTiles(),1);
-	buildTileLayer(tileMapData.getForegroundTiles(),2);
+	buildTileLayer(TileMapLayer::solid,tileMapData.getSolidTiles());
+	buildTileLayer(TileMapLayer::foreground,tileMapData.getForegroundTiles());
+	buildTileLayer(TileMapLayer::background, tileMapData.getBackgroundTiles());
 }
 
-void TileMap::buildTileLayer(const std::vector<int>& tiles, int layerNumber){
+void TileMap::buildTileLayer(TileMapLayer layerNumber, const std::vector<int>& tiles){
+
+	TexturedVertexArraySprite sprite = TexturedVertexArraySprite(tileMapData.getSpriteSheet().getTexture());
+
+	sprite.vertices.setPrimitiveType(sf::Quads);
+	sprite.vertices.resize(tileMapData.getTileCount()*4);
 
 	sf::IntRect textureRect;
 	sf::Vertex* quad;
-	int tileNumber = layerNumber*tileMapData.getTileCount();
+	int tileNumber = 0;
 
 	for(int y=0;y!=tileMapData.getSize().y;y++){
 		for(int x=0;x!=tileMapData.getSize().x;x++){
@@ -32,7 +31,7 @@ void TileMap::buildTileLayer(const std::vector<int>& tiles, int layerNumber){
 			if(frameIndex!=0){
 				textureRect = tileMapData.getSpriteSheet().getTextureRect(frameIndex-1);
 				
-				quad = &s().vertices[tileNumber*4];
+				quad = &sprite.vertices[tileNumber*4];
 				
 				quad[0].position = getTilePosition(x,y,tileMapData.getTileSize());
 				quad[1].position = getTilePosition(x+1,y, tileMapData.getTileSize());
@@ -48,5 +47,12 @@ void TileMap::buildTileLayer(const std::vector<int>& tiles, int layerNumber){
 			}
 		}
 	}
+
+	tileLayers[static_cast<int>(layerNumber)] = sprite;
 	
+}
+
+void TileMap::drawTileLayer(TileMapLayer tileMapLayer, sf::RenderTarget& target, sf::RenderStates states)const{
+	states.transform *= getTransform();
+	target.draw(tileLayers[static_cast<int>(tileMapLayer)],states);
 }

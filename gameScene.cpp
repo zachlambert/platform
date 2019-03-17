@@ -19,7 +19,7 @@ GameScene::GameScene(sf::RenderWindow& window,const Resources& resources):
         particleSystem(100),
         punchSound(){
 	
-	tileMap.t().setPosition(100,0);
+	tileMap.setPosition(100,0);
 	
 	punchSound.setBuffer(resources.getSoundBuffer(resource::Sound::punch1));
 	
@@ -115,9 +115,11 @@ void GameScene::update(float seconds){
 }
 
 void GameScene::draw(sf::RenderTarget& target,sf::RenderStates states)const{
-	target.draw(tileMap);
+	tileMap.drawTileLayer(TileMapLayer::background, target, states);
 	target.draw(player);
 	target.draw(particleSystem);
+	tileMap.drawTileLayer(TileMapLayer::solid, target, states);
+	tileMap.drawTileLayer(TileMapLayer::foreground, target, states);
 	//drawHitbox(target,player.t(),player.h());
 }
 

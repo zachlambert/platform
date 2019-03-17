@@ -6,6 +6,8 @@
 class VertexArraySprite: public sf::Transformable, public sf::Drawable{
 public:
 	VertexArraySprite():vertices(){}
+	virtual ~VertexArraySprite(){}
+
 	VertexArraySprite(sf::PrimitiveType type,unsigned int vertexCount=0):vertices(type,vertexCount){}
 	
 	virtual void draw(sf::RenderTarget&, sf::RenderStates)const;

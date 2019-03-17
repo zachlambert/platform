@@ -244,7 +244,7 @@ const bool collide(const sf::Transformable& a, Hitbox& ah, const sf::Transformab
 
 const bool collideTileMapV(const TileMap& tilemap, const sf::Transform& transform, const sf::FloatRect& rect, const std::vector<sf::Vector2f>& vertices) {
 	sf::FloatRect roughBounds = transform.transformRect(rect);
-	sf::Vector2f posA = sf::Vector2f(roughBounds.left, roughBounds.top) - tilemap.t().getPosition();
+	sf::Vector2f posA = sf::Vector2f(roughBounds.left, roughBounds.top) - tilemap.getPosition();
 	sf::Vector2f posB = posA + sf::Vector2f(roughBounds.width, roughBounds.height);
 	int xPosA = floor(posA.x / tilemap.getTileMapData().getTileSize().x);
 	int yPosA = floor(posA.y / tilemap.getTileMapData().getTileSize().y);
@@ -252,7 +252,7 @@ const bool collideTileMapV(const TileMap& tilemap, const sf::Transform& transfor
 	int yPosB = floor(posB.y / tilemap.getTileMapData().getTileSize().y);
 
 	sf::FloatRect tileRect;
-	sf::Transform tilemapTransform = (sf::Transform()).translate(tilemap.t().getPosition());
+	sf::Transform tilemapTransform = (sf::Transform()).translate(tilemap.getPosition());
 
 	for (int y = yPosA; y != yPosB + 1; y++) {
 		for (int x = xPosA; x != xPosB + 1; x++) {
@@ -270,7 +270,7 @@ const bool collideTileMapV(const TileMap& tilemap, const sf::Transform& transfor
 
 const bool collideTileMapC(const TileMap& tilemap, const sf::Transform& transform, const sf::FloatRect& rect, const float radius) {
 	sf::FloatRect roughBounds = transform.transformRect(rect);
-	sf::Vector2f posA = sf::Vector2f(roughBounds.left, roughBounds.top) - tilemap.t().getPosition();
+	sf::Vector2f posA = sf::Vector2f(roughBounds.left, roughBounds.top) - tilemap.getPosition();
 	sf::Vector2f posB = posA + sf::Vector2f(roughBounds.width, roughBounds.height);
 	int xPosA = floor(posA.x / tilemap.getTileMapData().getTileSize().x);
 	int yPosA = floor(posA.y / tilemap.getTileMapData().getTileSize().y);
@@ -278,7 +278,7 @@ const bool collideTileMapC(const TileMap& tilemap, const sf::Transform& transfor
 	int yPosB = floor(posB.y / tilemap.getTileMapData().getTileSize().y);
 
 	sf::FloatRect tileRect;
-	sf::Transform tilemapTransform = (sf::Transform()).translate(tilemap.t().getPosition());
+	sf::Transform tilemapTransform = (sf::Transform()).translate(tilemap.getPosition());
 
 	for (int y = yPosA; y != yPosB + 1; y++) {
 		for (int x = xPosA; x != xPosB + 1; x++) {
@@ -297,7 +297,7 @@ const bool collideTileMapC(const TileMap& tilemap, const sf::Transform& transfor
 const bool collideTileMapR(const TileMap& tilemap, const sf::Transform& transform, const sf::FloatRect& rect) {
 	//Find the position of the top,left and bottom,right corner of the roughBounds in the tilemap.
 	sf::FloatRect roughBounds = transform.transformRect(rect);
-	sf::Vector2f posA = sf::Vector2f(roughBounds.left, roughBounds.top) - tilemap.t().getPosition();
+	sf::Vector2f posA = sf::Vector2f(roughBounds.left, roughBounds.top) - tilemap.getPosition();
 	sf::Vector2f posB = posA + sf::Vector2f(roughBounds.width, roughBounds.height);
 	int xPosA = floor(posA.x / tilemap.getTileMapData().getTileSize().x);
 	int yPosA = floor(posA.y / tilemap.getTileMapData().getTileSize().y);

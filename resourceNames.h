@@ -1,6 +1,13 @@
 #ifndef RESOURCE_NAMES_H_GUARD
 #define RESOURCE_NAMES_H_GUARD
 
+enum class TileMapLayer{
+	solid,
+	foreground,
+	background,
+	NUMBER_OF_LAYERS
+};
+
 namespace resource{
 
 enum class SpriteSheet{
